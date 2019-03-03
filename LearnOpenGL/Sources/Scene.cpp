@@ -43,7 +43,35 @@ void Scene::init() {
 
 void Scene::draw(std::shared_ptr<ShaderProgram> shader)
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Erase the color and z buffers.
+	shader->use(); // Activate the program to be used for upcoming primitive
+	glm::mat4 projectionMatrix = camera->getProjectionMatrix();//computeProjectionMatrix();
+	shader->set("projectionMat", projectionMatrix); // Compute the projection matrix of the camera and pass it to the GPU program
 
+	camera->updateViewMatrix();
+	glm::mat4 viewMatrix = camera->viewMatrix;//computeViewMatrix();
+	shader->set("viewMat", viewMatrix);
+
+	Material material_red = Material();
+
+	glm::vec3 lightpos = light.position;
+	glm::vec4 l = viewMatrix * glm::vec4(lightpos, 1.0);
+	glm::vec3 lv = glm::vec3(l);
+	shader->set("lightSource.position", lv);
+
+	for (int i = 0; i < mesh.size(); i++) {
+		glm::mat4 modelMatrix = mesh[i]->computeTransformMatrix();
+		glm::mat4 normalMatrix = glm::transpose(glm::inverse(viewMatrix * modelMatrix));
+		
+		ShaderProgram& s = *shader;
+		material_red.SendToShader(s);
+
+		shader->set("modelMat", modelMatrix);
+		shader->set("normalMat", normalMatrix);
+
+		mesh[i]->render();
+	}
+	shader->stop();
 }
 
 void Scene::update()

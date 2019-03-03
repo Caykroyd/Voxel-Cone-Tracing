@@ -98,16 +98,12 @@ void Window::load_shaders() {
 }
 
 void Window::set_light(const Light l) const {
-	shader->set("lightSource.position", l.position);
-	shader->set("lightSource.color", l.color);
-	shader->set("lightSource.intensity", l.intensity);
+	ShaderProgram& s = *shader;
+	l.SendToShader(s);
 }
 
 void Window::set_material(const Material m) const {
-	shader->set("material.albedo", m.albedo);
-	shader->set("material.shininess", m.shininess);
-	shader->set("material.kd", m.kd);
-	shader->set("material.ks", m.ks);
+
 }
 
 double Window::delta_time = 0.0;
@@ -160,37 +156,7 @@ void Window::init()
 
 
 void Window::draw() {
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Erase the color and z buffers.
-	shader->use(); // Activate the program to be used for upcoming primitive
-	glm::mat4 projectionMatrix = current_scene->camera->getProjectionMatrix();//computeProjectionMatrix();
-	shader->set("projectionMat", projectionMatrix); // Compute the projection matrix of the camera and pass it to the GPU program
-
-	current_scene->camera->updateViewMatrix();
-	glm::mat4 viewMatrix = current_scene->camera->viewMatrix;//computeViewMatrix();
-	shader->set("viewMat", viewMatrix);
-
-	Material red = Material();
-
-	glm::vec3 lightpos = current_scene->light.position;
-	glm::vec4 l = viewMatrix * glm::vec4(lightpos, 1.0);
-	glm::vec3 lv = glm::vec3(l);
-	shader->set("lightSource.position", lv);
-
-	std::vector<std::shared_ptr<Mesh>> mesh = current_scene->mesh;
-	for (int i = 0; i < mesh.size(); i++) {
-		glm::mat4 modelMatrix = mesh[i]->computeTransformMatrix();
-		glm::mat4 normalMatrix = glm::transpose(glm::inverse(viewMatrix * modelMatrix));
-
-		set_material(red);
-
-		shader->set("modelMat", modelMatrix);
-		shader->set("normalMat", normalMatrix);
-
-		mesh[i]->render();
-	}
-	shader->stop();
-
+	current_scene->draw(shader);
 }
 
 Window& Window::getInstance()

@@ -140,7 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Sources\Window.h" />
     <ClInclude Include="Sources\Camera.h" />
-    <ClInclude Include="Sources\Controller.h" />
+    <ClInclude Include="Sources\ShaderProperty.h" />
     <ClInclude Include="Sources\Error.h" />
     <ClInclude Include="Sources\EventManager.h" />
     <ClInclude Include="Sources\FirstPersonController.h" />
