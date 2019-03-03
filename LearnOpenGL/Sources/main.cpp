@@ -4,7 +4,7 @@
 
 int main() {
 
-	App& app = App::getInstance();
+	Window& app = Window::getInstance();
 	
 	app.init();
 

@@ -18,7 +18,7 @@ void Scene::init() {
 	// Camera
 	camera = std::make_shared<PerspectiveCamera>();
 	std::shared_ptr<FirstPersonController> controller = std::make_shared<FirstPersonController>(camera);
-	App::Register(controller);
+	Window::Register(controller);
 
 	light = Light(glm::vec3(10.0, 10.0, 10.0), glm::vec3(1.0, 1.0, 1.0), 1.f);
 
@@ -56,7 +56,7 @@ std::shared_ptr<Mesh> Scene::load_mesh(const std::string& filename) {
 		MeshLoader::loadOFF(filename, meshPtr);
 	}
 	catch (std::exception & e) {
-		App::exit_error("Error loading mesh from " + filename + ":" + e.what());
+		Window::exit_error("Error loading mesh from " + filename + ":" + e.what());
 	}
 	meshPtr->init();
 

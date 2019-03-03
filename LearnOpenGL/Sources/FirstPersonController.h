@@ -1,3 +1,26 @@
+/*
+MIT License
+
+Copyright(c) 2016 Fredrik Präntare
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files(the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions :
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 #pragma once
 
 #include <iostream> // TODO: Remove.
@@ -9,7 +32,6 @@
 #include <glm/gtx/rotate_vector.hpp>
 
 #include "Camera.h"
-#include "PerspectiveCamera.h"
 #include "App.h"
 #include "Controller.h"
 
@@ -27,7 +49,7 @@ public:
 	std::shared_ptr<Camera> targetCamera = nullptr; // Dummy camera used for interpolation.
 
 	FirstPersonController(std::shared_ptr<Camera> camera) {
-		targetCamera = std::make_shared<PerspectiveCamera>();
+		targetCamera = std::make_shared<Camera>(*camera);
 		renderingCamera = camera;
 	}
 
@@ -40,8 +62,8 @@ public:
 			targetCamera->position = renderingCamera->position;
 
 			int xwidth, yheight;
-			glfwGetWindowSize(App::getInstance().window, &xwidth, &yheight);
-			glfwSetCursorPos(App::getInstance().window, xwidth / 2, yheight / 2);
+			glfwGetWindowSize(Window::getInstance().window, &xwidth, &yheight);
+			glfwSetCursorPos(Window::getInstance().window, xwidth / 2, yheight / 2);
 
 			firstUpdate = false;
 		}
@@ -50,7 +72,7 @@ public:
 		double xpos, ypos;
 		double xmid, ymid;
 
-		GLFWwindow * window = App::getInstance().window;
+		GLFWwindow * window = Window::getInstance().window;
 
 		glfwGetWindowSize(window, &xwidth, &yheight);
 		glfwGetCursorPos(window, &xpos, &ypos);
@@ -83,25 +105,25 @@ public:
 		// ----------
 		// Move forward.
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-			targetCamera->position += targetCamera->forward() * (float)App::delta_time * CAMERA_SPEED;
+			targetCamera->position += targetCamera->forward() * (float)Window::delta_time * CAMERA_SPEED;
 		}
 		// Move backward.
 		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-			targetCamera->position -= targetCamera->forward() * (float)App::delta_time * CAMERA_SPEED;
+			targetCamera->position -= targetCamera->forward() * (float)Window::delta_time * CAMERA_SPEED;
 		}
 		// Strafe right.
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			targetCamera->position += targetCamera->right() * (float)App::delta_time * CAMERA_SPEED;
+			targetCamera->position += targetCamera->right() * (float)Window::delta_time * CAMERA_SPEED;
 		}
 		// Strafe left.
 		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			targetCamera->position -= targetCamera->right() * (float)App::delta_time * CAMERA_SPEED;
+			targetCamera->position -= targetCamera->right() * (float)Window::delta_time * CAMERA_SPEED;
 		}
 
 		// Interpolate between target and current camera.
 		auto camera = renderingCamera;
-		camera->rotation = mix(camera->rotation, targetCamera->rotation, glm::clamp(App::delta_time * CAMERA_ROTATION_INTERPOLATION_SPEED, 0.0, 1.0));
-		camera->position = mix(camera->position, targetCamera->position, glm::clamp(App::delta_time * CAMERA_POSITION_INTERPOLATION_SPEED, 0.0, 1.0));
+		camera->rotation = mix(camera->rotation, targetCamera->rotation, glm::clamp(Window::delta_time * CAMERA_ROTATION_INTERPOLATION_SPEED, 0.0, 1.0));
+		camera->position = mix(camera->position, targetCamera->position, glm::clamp(Window::delta_time * CAMERA_POSITION_INTERPOLATION_SPEED, 0.0, 1.0));
 
 		// Reset mouse position for next update iteration.
 		glfwSetCursorPos(window, xwidth / 2, yheight / 2);
