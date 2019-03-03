@@ -20,7 +20,6 @@
 #include "Light.h"
 #include "Material.h"
 #include "Scene.h"
-#include "IUpdatable.h"
 
 class Window {
 
@@ -45,9 +44,7 @@ private:
 	void set_material(const Material m) const;
 
 	void set_scene(Scene& s) const;
-
-	void generate_triangle();
-
+	
 	void draw();
 	   
 	std::shared_ptr<ShaderProgram> shader = nullptr;
@@ -60,7 +57,6 @@ private:
 
 	static double _time;
 
-	std::list<std::shared_ptr<IUpdatable>> updatables;
 public:
 	Window(Window const&) = delete;
 	void operator=(Window const&) = delete;
@@ -84,9 +80,6 @@ public:
 
 	static double delta_time;
 
-	static void Register(std::shared_ptr<IUpdatable> obj) {
-		Window::getInstance().updatables.push_back(obj);
-	}
 };
 
 #endif

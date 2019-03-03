@@ -17,7 +17,7 @@ void Scene::init() {
 	// Camera
 	camera = std::make_shared<PerspectiveCamera>();
 	std::shared_ptr<FirstPersonController> controller = std::make_shared<FirstPersonController>(camera);
-	Window::Register(controller);
+	Register(controller);
 
 	light = Light(glm::vec3(10.0, 10.0, 10.0), glm::vec3(1.0, 1.0, 1.0), 1.f);
 
@@ -48,6 +48,30 @@ void Scene::draw(std::shared_ptr<ShaderProgram> shader)
 
 void Scene::update()
 {
+	std::list<std::shared_ptr<IUpdatable>> destroy_queue = std::list<std::shared_ptr<IUpdatable>>();
+
+	for (auto& obj : updatables) {
+
+		if (obj->should_destroy)
+		{
+			obj->destroy();
+			destroy_queue.push_back(obj);
+			continue;
+		}
+
+		if (obj->should_init)
+		{
+			obj->init();
+		}
+
+		obj->update();
+
+	}
+
+	// Destroy all marked objects
+	for (auto obj : destroy_queue) {
+		updatables.remove(obj);
+	}
 
 }
 

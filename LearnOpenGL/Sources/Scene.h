@@ -2,12 +2,13 @@
 
 #include <glm/glm.hpp>
 
-#include <vector>
+#include <list>
 
 #include "Camera.h"
 #include "Light.h"
 #include "Mesh.h"
 #include "ShaderProgram.h"
+#include "IUpdatable.h"
 
 enum Primitives { P_SPHERE };
 
@@ -16,6 +17,7 @@ class Scene {
 	std::shared_ptr<Mesh> load_mesh(const std::string & filename);
 	std::shared_ptr<Mesh> load_primitive(Primitives shape, glm::vec3 translation, glm::vec3 rotation, float scale);
 
+	std::list<std::shared_ptr<IUpdatable>> updatables;
 public:
 	Scene() {};
 
@@ -36,4 +38,9 @@ public:
 	Light light;
 	std::shared_ptr<Camera> camera = nullptr;
 	std::vector<std::shared_ptr<Mesh>> mesh = {}; // later turn this into an array
+
+
+	void Register(std::shared_ptr<IUpdatable> obj) {
+		updatables.push_back(obj);
+	}
 };

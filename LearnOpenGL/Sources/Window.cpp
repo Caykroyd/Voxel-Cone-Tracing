@@ -74,6 +74,11 @@ void Window::terminate_resources() {
 	glfwTerminate();
 }
 
+void Window::terminate()
+{
+	glfwTerminate();
+}
+
 void Window::exit_error(const std::string& message) {
 	Window::getInstance().terminate_resources();
 	std::cerr << message << std::endl;
@@ -112,30 +117,8 @@ void Window::update()
 {
 	process_input(window);
 
-	std::list<std::shared_ptr<IUpdatable>> destroy_queue = std::list<std::shared_ptr<IUpdatable>>();
+	current_scene->update();
 
-	for (auto& obj : updatables) {
-
-		if (obj->should_destroy)
-		{
-			obj->destroy();
-			destroy_queue.push_back(obj);
-			continue;
-		}
-
-		if (!obj->should_init)
-		{
-			obj->init();
-		}
-		
-		obj->update();
-
-	}
-	// Destroy all marked objects
-	for (auto obj : destroy_queue) {
-		updatables.remove(obj);
-	}
-	
 	draw();
 
 	glfwSwapBuffers(window); // double buffers
@@ -172,15 +155,9 @@ void Window::init()
 	
 	set_light(current_scene->light);
 	
-	//controller = std::make_shared<FirstPersonController>(current_scene->camera);
-
 	_time = glfwGetTime();
 }
 
-void Window::terminate()
-{
-	glfwTerminate();
-}
 
 void Window::draw() {
 
