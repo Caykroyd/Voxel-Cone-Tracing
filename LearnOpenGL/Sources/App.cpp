@@ -57,8 +57,9 @@ void App::glad_init(glm::vec4 color = glm::vec4(0.2f, 0.3f, 0.3f, 1.0f)) {
 	glEnable(GL_DEBUG_OUTPUT); // Modern error callback functionnality
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); // For recovering the line where the error occurs, set a debugger breakpoint in DebugMessageCallback
 	glDebugMessageCallback(debugMessageCallback, 0); // Specifies the function to call when an error message is generated.
-	//glCullFace(GL_BACK);     // Specifies the faces to cull (here the ones pointing away from the camera)
-	//glEnable(GL_CULL_FACE); // Enables face culling (based on the orientation defined by the CW/CCW enumeration).
+	//Cullfacing was culling the wrong face, that's why we got weird behaviour from lighting (we were seeing the inside of the sphere)
+	glCullFace(GL_BACK);     // Specifies the faces to cull (here the ones pointing away from the camera)
+	glEnable(GL_CULL_FACE); // Enables face culling (based on the orientation defined by the CW/CCW enumeration).
 	glDepthFunc(GL_LESS); // Specify the depth test for the z-buffer
 	glEnable(GL_DEPTH_TEST); // Enable the z-buffer test in the rasterization
 

@@ -41,7 +41,9 @@ void Mesh::recomputePerVertexNormals (bool angleBased) {
 		glm::vec3 normal(0.0);
 		for (const auto & t : neighbours[i]) {
 			// by computing the cross product, I obtain the normal vector with magnitude proportional to the area of the triangle
-			normal += glm::cross(m_vertexPositions[t.y]- m_vertexPositions[t.x], m_vertexPositions[t.z] - m_vertexPositions[t.x]);
+			float k = 1 / glm::distance(m_vertexPositions[t.y], m_vertexPositions[t.x]) 
+							/ glm::distance(m_vertexPositions[t.z], m_vertexPositions[t.x]);
+			normal += glm::cross(m_vertexPositions[t.y]- m_vertexPositions[t.x], m_vertexPositions[t.z] - m_vertexPositions[t.x]) * k;
 		}
 		m_vertexNormals[i] = glm::normalize(m_vertexPositions[i]);//glm::normalize(normal);
 	}
@@ -143,17 +145,22 @@ std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mes
 			int thisIndex = step_T * re_2 + step_P;
 
 			// triangle 1: normals pointing outwards 
-			sphere->m_triangleIndices.push_back(glm::uvec3(1+thisIndex, 1+(thisIndex + 1 + re_2)%k, 1+thisIndex + 1));
+			//sphere->m_triangleIndices.push_back(glm::uvec3(1+thisIndex, 1+(thisIndex + 1 + re_2)%k, 1+thisIndex + 1));
+			sphere->m_triangleIndices.push_back(glm::uvec3(1 + thisIndex, 1 + thisIndex + 1, 1 + (thisIndex + 1 + re_2) % k));
 
 			// triangle 2: normals pointing outwards
-			sphere->m_triangleIndices.push_back(glm::uvec3(1+thisIndex, 1+(thisIndex + re_2)%k, 1+(thisIndex + 1 + re_2)%k));
+			//sphere->m_triangleIndices.push_back(glm::uvec3(1+thisIndex, 1+(thisIndex + re_2)%k, 1+(thisIndex + 1 + re_2)%k));
+			sphere->m_triangleIndices.push_back(glm::uvec3(1 + thisIndex, 1 + (thisIndex + 1 + re_2) % k, 1 + (thisIndex + re_2) % k));
+
 		}
 		// computing indices in poles
 		int first_index =  step_T * re_2;
-		sphere->m_triangleIndices.push_back(glm::uvec3(0, 1 + (first_index + re_2)%k, 1 + first_index));
+		//sphere->m_triangleIndices.push_back(glm::uvec3(0, 1 + (first_index + re_2)%k, 1 + first_index));
+		sphere->m_triangleIndices.push_back(glm::uvec3(0, 1 + first_index, 1 + (first_index + re_2) % k));
 
 		int last_index = step_T * re_2 + (re_2-1);
-		sphere->m_triangleIndices.push_back(glm::uvec3(size-1, 1 + last_index, 1 + (last_index + re_2)%k));
+		//sphere->m_triangleIndices.push_back(glm::uvec3(size-1, 1 + last_index, 1 + (last_index + re_2)%k));
+		sphere->m_triangleIndices.push_back(glm::uvec3(size - 1, 1 + (last_index + re_2) % k, 1 + last_index));
 	}
 
 	// vertex texture coordinates as a cilindrical projection
