@@ -4,13 +4,12 @@
 #include <glm/glm.hpp>
 
 #include "MeshLoader.h"
-#include "App.h"
+#include "Window.h"
 #include "FirstPersonController.h"
 #include "PerspectiveCamera.h"
 
 #include <memory>
 #include <iostream>
-#include "App.h" // circular dependency
 
 
 void Scene::init() {

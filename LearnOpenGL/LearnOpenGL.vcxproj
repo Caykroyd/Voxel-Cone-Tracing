@@ -125,7 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\external\src\glad.c" />
-    <ClCompile Include="Sources\App.cpp" />
+    <ClCompile Include="Sources\Window.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />
     <ClCompile Include="Sources\Error.cpp" />
     <ClCompile Include="Sources\EventManager.cpp" />
@@ -138,7 +138,7 @@
     <ClCompile Include="Sources\ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\App.h" />
+    <ClInclude Include="Sources\Window.h" />
     <ClInclude Include="Sources\Camera.h" />
     <ClInclude Include="Sources\Controller.h" />
     <ClInclude Include="Sources\Error.h" />

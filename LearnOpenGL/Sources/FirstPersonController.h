@@ -32,7 +32,7 @@ SOFTWARE.
 #include <glm/gtx/rotate_vector.hpp>
 
 #include "Camera.h"
-#include "App.h"
+#include "Window.h"
 #include "Controller.h"
 
 #include <memory>
