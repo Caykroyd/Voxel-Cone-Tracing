@@ -38,11 +38,7 @@ private:
 	void terminate_resources();
 	
 	void load_shaders();
-
-	void set_light(Light l) const;
-	
-	void set_scene(Scene& s) const;
-	
+		
 	void draw();
 	   
 	std::shared_ptr<ShaderProgram> shader = nullptr;

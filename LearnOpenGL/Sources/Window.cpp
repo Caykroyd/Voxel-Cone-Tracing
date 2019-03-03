@@ -14,7 +14,7 @@
 #include <time.h>
 #include <list>
 
-#include "Light.h"
+#include "Scenes/Scene_1.h"
 
 
 void Window::glfw_init() {
@@ -97,11 +97,6 @@ void Window::load_shaders() {
 	}
 }
 
-void Window::set_light(Light l) const {
-	ShaderProgram& s = *shader;
-	l.SendToShader(s);
-}
-
 double Window::delta_time = 0.0;
 double Window::_time = 0.0;
 
@@ -126,26 +121,14 @@ bool Window::shouldClose()
 	return glfwWindowShouldClose(window);
 }
 
-void Window::set_scene(Scene& s) const {
-	
-	s.init();
-
-	int width, height;
-	glfwGetWindowSize(window, &width, &height);
-	//s.camera->setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
-
-}
-
 void Window::init()
 {
 	glfw_init();
 	glad_init();
 
 	load_shaders();
-	current_scene = std::make_shared<Scene>();
+	current_scene = std::make_shared<Scene_1>();
 	current_scene->init();
-	
-	set_light(current_scene->light);
 	
 	_time = glfwGetTime();
 }

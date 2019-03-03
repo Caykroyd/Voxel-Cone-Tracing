@@ -13,11 +13,11 @@
 enum Primitives { P_SPHERE };
 
 class Scene {
-
+private:
+	std::list<std::shared_ptr<IUpdatable>> updatables;
+protected:
 	std::shared_ptr<Mesh> load_mesh(const std::string & filename);
 	std::shared_ptr<Mesh> load_primitive(Primitives shape, glm::vec3 translation, glm::vec3 rotation, float scale);
-
-	std::list<std::shared_ptr<IUpdatable>> updatables;
 public:
 	Scene() {};
 
@@ -30,7 +30,7 @@ public:
 	glm::vec3 baseTrans = glm::vec3(0.0);
 	glm::vec3 baseRot = glm::vec3(0.0);
 
-	void init();
+	virtual void init() {};
 	void draw(std::shared_ptr<ShaderProgram> shader);
 	void update();
 	void terminate();

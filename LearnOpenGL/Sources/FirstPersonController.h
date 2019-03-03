@@ -67,6 +67,7 @@ public:
 			int xwidth, yheight;
 			glfwGetWindowSize(Window::getInstance().window, &xwidth, &yheight);
 			glfwSetCursorPos(Window::getInstance().window, xwidth / 2, yheight / 2);
+			//camera->setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
 
 			firstUpdate = false;
 		}

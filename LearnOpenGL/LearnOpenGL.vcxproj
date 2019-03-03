@@ -138,6 +138,7 @@
     <ClCompile Include="Sources\ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\Scenes\Scene_1.h" />
     <ClInclude Include="Sources\Window.h" />
     <ClInclude Include="Sources\Camera.h" />
     <ClInclude Include="Sources\ShaderProperty.h" />
