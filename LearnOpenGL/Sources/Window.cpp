@@ -97,13 +97,9 @@ void Window::load_shaders() {
 	}
 }
 
-void Window::set_light(const Light l) const {
+void Window::set_light(Light l) const {
 	ShaderProgram& s = *shader;
 	l.SendToShader(s);
-}
-
-void Window::set_material(const Material m) const {
-
 }
 
 double Window::delta_time = 0.0;

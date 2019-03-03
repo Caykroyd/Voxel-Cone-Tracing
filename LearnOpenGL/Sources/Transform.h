@@ -3,10 +3,20 @@
 
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include "ShaderProperty.h"
+#include "ShaderProgram.h"
 
 /// A base class to represent spatially embedded entities in the scene. 
-class Transform {
+class Transform : public ShaderProperty {
 public:
+	void SendToShader(ShaderProgram& shader) override 
+	{
+		glm::mat4 modelMatrix = computeTransformMatrix();
+		
+		shader.set("M_Model", modelMatrix);
+		shader.set("M_Model_1t", glm::transpose(glm::inverse(modelMatrix)));
+	}
+
 	Transform () : position (0.0), rotation (0.0), scale (1.0) {}
 	virtual ~Transform () {}
 	

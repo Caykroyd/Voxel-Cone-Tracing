@@ -39,10 +39,8 @@ private:
 	
 	void load_shaders();
 
-	void set_light(const Light l) const;
-
-	void set_material(const Material m) const;
-
+	void set_light(Light l) const;
+	
 	void set_scene(Scene& s) const;
 	
 	void draw();

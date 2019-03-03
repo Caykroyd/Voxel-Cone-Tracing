@@ -20,12 +20,14 @@ uniform Material material;
 in vec3 fPosition; // Shader input, linearly interpolated by default from the previous stage (here the vertex shader)
 in vec3 fNormal;
 in vec2 fTexCoord;
+in vec3 fLightPosition;
 
 out vec4 colorResponse; // Shader output: the color response attached to this fragment
 
+
 void main() {
 	vec3 n = normalize (fNormal); // Linear barycentric interpolation does not preserve unit vectors
-	vec3 wi = normalize (lightSource.position - fPosition);
+	vec3 wi = normalize (fLightPosition - fPosition);
 	vec3 wo = normalize (-fPosition);
 	float lambertianTerm = max (0.0, dot (n, wi));
 	//vec3 fr = material.albedo;

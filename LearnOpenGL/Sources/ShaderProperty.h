@@ -5,5 +5,5 @@
 class ShaderProperty {
 	public:
 		virtual ~ShaderProperty() {};
-		virtual void SendToShader(ShaderProgram& shader) const {};
+		virtual void SendToShader(ShaderProgram& shader) {};
 };

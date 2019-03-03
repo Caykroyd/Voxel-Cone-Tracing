@@ -12,14 +12,14 @@ public:
 	float kd;
 	float ks;
 
-	void SendToShader(ShaderProgram& shader) const override {
+	void SendToShader(ShaderProgram& shader) override {
 		shader.set("material.albedo", albedo);
 		shader.set("material.shininess", shininess);
 		shader.set("material.kd", kd);
 		shader.set("material.ks", ks);
 	}
 
-	Material() : albedo(1.0, 0.0, 0.0), shininess(1.0), kd(0.8), ks(0.10) {};
+	Material() : albedo(1.0, 0.0, 0.0), shininess(1.0f), kd(0.8f), ks(0.10f) {};
 	~Material();
 };
 

@@ -32,7 +32,7 @@ void Mesh::recomputePerVertexNormals (bool angleBased) {
 
 
 	const unsigned int n = m_vertexPositions.size();
-	std::vector<std::list<glm::vec3>> neighbours(n);
+	std::vector<std::list<glm::uvec3>> neighbours(n);
 	for (glm::vec3 triangle : m_triangleIndices) {
 		neighbours[triangle.x].push_back(triangle);
 		neighbours[triangle.y].push_back(triangle);
@@ -166,7 +166,7 @@ std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mes
 	}	
 
 	vector<bool> belongsToTriangle = vector<bool>(sphere->m_vertexPositions.size(), false);
-	for (glm::vec3 triangle : sphere->m_triangleIndices) {
+	for (glm::uvec3 triangle : sphere->m_triangleIndices) {
 		belongsToTriangle[triangle.x] = true;
 		belongsToTriangle[triangle.y] = true;
 		belongsToTriangle[triangle.z] = true;

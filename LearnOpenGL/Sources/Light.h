@@ -12,7 +12,7 @@ struct Light : public ShaderProperty
 		glm::vec3 position;
 		glm::vec3 color;
 		float intensity;
-		void SendToShader(ShaderProgram& shader) const override {
+		void SendToShader(ShaderProgram& shader) override {
 			shader.set("lightSource.position", position);
 			shader.set("lightSource.color", color);
 			shader.set("lightSource.intensity", intensity);
