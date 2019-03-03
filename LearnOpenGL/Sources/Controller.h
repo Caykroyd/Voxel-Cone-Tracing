@@ -2,7 +2,7 @@
 
 #include "IUpdatable.h"
 
-class Controller : public IUpdatable {
+class Controller {
 	public:
 		virtual ~Controller() {};
 		virtual void update() {};

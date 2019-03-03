@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <exception>
 #include <time.h>
+#include <list>
 
 #include "Light.h"
 
@@ -66,7 +67,6 @@ void Window::glad_init(glm::vec4 color = glm::vec4(0.2f, 0.3f, 0.3f, 1.0f)) {
 
 }
 
-
 void Window::terminate_resources() {
 	current_scene->terminate();
 	shader.reset();
@@ -105,26 +105,37 @@ void Window::set_material(const Material m) const {
 	shader->set("material.ks", m.ks);
 }
 
-void Window::generate_triangle() {
-	float vertex_positions[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.8f, -0.8f, 0.0f,
-		0.0f, 0.9f, 0.0f
-	};
-
-}
-
 double Window::delta_time = 0.0;
 double Window::_time = 0.0;
 
 void Window::update()
 {
-	for (auto &obj : updatables) {
-		obj->update();
-	}
-
 	process_input(window);
 
+	std::list<std::shared_ptr<IUpdatable>> destroy_queue = std::list<std::shared_ptr<IUpdatable>>();
+
+	for (auto& obj : updatables) {
+
+		if (obj->should_destroy)
+		{
+			obj->destroy();
+			destroy_queue.push_back(obj);
+			continue;
+		}
+
+		if (!obj->should_init)
+		{
+			obj->init();
+		}
+		
+		obj->update();
+
+	}
+	// Destroy all marked objects
+	for (auto obj : destroy_queue) {
+		updatables.remove(obj);
+	}
+	
 	draw();
 
 	glfwSwapBuffers(window); // double buffers

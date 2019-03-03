@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "Mesh.h"
+#include "ShaderProgram.h"
 
 enum Primitives { P_SPHERE };
 
@@ -28,6 +29,8 @@ public:
 	glm::vec3 baseRot = glm::vec3(0.0);
 
 	void init();
+	void draw(std::shared_ptr<ShaderProgram> shader);
+	void update();
 	void terminate();
 
 	Light light;

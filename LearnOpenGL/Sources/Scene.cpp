@@ -41,6 +41,16 @@ void Scene::init() {
 	//camera->setFar(60.f * meshSize);
 }
 
+void Scene::draw(std::shared_ptr<ShaderProgram> shader)
+{
+
+}
+
+void Scene::update()
+{
+
+}
+
 void Scene::terminate() {
 	camera.reset();
 	for (int i = 0; i < mesh.size(); i++)

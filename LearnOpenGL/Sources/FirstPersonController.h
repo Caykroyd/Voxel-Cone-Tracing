@@ -33,12 +33,11 @@ SOFTWARE.
 
 #include "Camera.h"
 #include "Window.h"
-#include "Controller.h"
 
 #include <memory>
 
 /// <summary> A first person controller that can be attached to a camera. </summary>
-class FirstPersonController : public Controller {
+class FirstPersonController : public IUpdatable {
 public:
 	const float CAMERA_SPEED = 1.4f;
 	const float CAMERA_ROTATION_SPEED = 0.003f;
@@ -54,6 +53,10 @@ public:
 	}
 
 	FirstPersonController() { }
+
+	void init() {
+
+	}
 
 	void update() {
 
@@ -129,7 +132,7 @@ public:
 		glfwSetCursorPos(window, xwidth / 2, yheight / 2);
 
 		// Update view (camera) matrix.
-		//camera->updateViewMatrix();
+		camera->updateViewMatrix();
 	}
 private:
 	bool firstUpdate = true;
