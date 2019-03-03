@@ -29,13 +29,11 @@ void Mesh::recomputePerVertexNormals (bool angleBased) {
 	m_vertexNormals.clear ();
 	// Change the following code to compute a proper per-vertex normal
 	m_vertexNormals.resize (m_vertexPositions.size (), glm::vec3 (0.0, 0.0, 1.0));
-	int i = 0;
+
+
 	const unsigned int n = m_vertexPositions.size();
 	std::vector<std::list<glm::vec3>> neighbours(n);
 	for (glm::vec3 triangle : m_triangleIndices) {
-		if (neighbours[triangle.x].size() == 0) i++;
-		if (neighbours[triangle.y].size() == 0) i++;
-		if (neighbours[triangle.z].size() == 0) i++;
 		neighbours[triangle.x].push_back(triangle);
 		neighbours[triangle.y].push_back(triangle);
 		neighbours[triangle.z].push_back(triangle);
@@ -53,7 +51,6 @@ void Mesh::recomputePerVertexNormals (bool angleBased) {
 		}
 		m_vertexNormals[i] = glm::normalize(normal);
 	}
-	cout << "Vertices belonging to triangles: " << i << "/" <<n << endl;
 }
 
 void Mesh::init () {
@@ -145,29 +142,38 @@ std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mes
 	
 	int size = sphere->m_vertexPositions.size();
 
-	int k = (resolution-1) * re_2;
+	int k = (resolution - 1) * re_2;
 	// Computing triangle indices (except for poles)
-	for (int step_T = 0; step_T < resolution-1; step_T++) {
-		for (int step_P = 0; step_P < re_2 - 1; step_P++) {
-			int thisIndex = step_T * re_2 + step_P;
+	for (int step_T = 0; step_T < resolution; step_T++) {
+		int step_T2 = (step_T + 1) % resolution;
+
+		for (int step_P = 1; step_P < re_2; step_P++) {
+			int step_P2 = step_P + 1;
 
 			// triangle 1: normals pointing outwards 
 			//sphere->m_triangleIndices.push_back(glm::uvec3(1+thisIndex, 1+(thisIndex + 1 + re_2)%k, 1+thisIndex + 1));
-			sphere->m_triangleIndices.push_back(glm::uvec3(1 + thisIndex, 1 + thisIndex + 1, 1 + (thisIndex + 1 + re_2) % k));
+			sphere->m_triangleIndices.push_back(glm::uvec3(step_T*re_2+step_P, step_T*re_2 + step_P2, step_T2*re_2 + step_P2));
 
 			// triangle 2: normals pointing outwards
 			//sphere->m_triangleIndices.push_back(glm::uvec3(1+thisIndex, 1+(thisIndex + re_2)%k, 1+(thisIndex + 1 + re_2)%k));
-			sphere->m_triangleIndices.push_back(glm::uvec3(1 + thisIndex, 1 + (thisIndex + 1 + re_2) % k, 1 + (thisIndex + re_2) % k));
+			sphere->m_triangleIndices.push_back(glm::uvec3(step_T*re_2 + step_P, step_T2*re_2 + step_P2, step_T2*re_2 + step_P));
 
 		}
-		// computing indices in poles
-		int first_index =  step_T * re_2;
-		//sphere->m_triangleIndices.push_back(glm::uvec3(0, 1 + (first_index + re_2)%k, 1 + first_index));
-		sphere->m_triangleIndices.push_back(glm::uvec3(0, 1 + first_index, 1 + (first_index + re_2) % k));
+		// computing triangles in poles
+		sphere->m_triangleIndices.push_back(glm::uvec3(0, step_T * re_2 + 1, step_T2 * re_2 + 1));
 
-		int last_index = step_T * re_2 + (re_2-1);
-		//sphere->m_triangleIndices.push_back(glm::uvec3(size-1, 1 + last_index, 1 + (last_index + re_2)%k));
-		sphere->m_triangleIndices.push_back(glm::uvec3(size - 1, 1 + (last_index + re_2) % k, 1 + last_index));
+		sphere->m_triangleIndices.push_back(glm::uvec3(size - 1, step_T2 * re_2 + (re_2 - 1), step_T * re_2 + (re_2-1)));
+	}	
+
+	vector<bool> belongsToTriangle = vector<bool>(sphere->m_vertexPositions.size(), false);
+	for (glm::vec3 triangle : sphere->m_triangleIndices) {
+		belongsToTriangle[triangle.x] = true;
+		belongsToTriangle[triangle.y] = true;
+		belongsToTriangle[triangle.z] = true;
+	}
+	for (unsigned int i = 0; i < belongsToTriangle.size(); ++i) {
+		if (!belongsToTriangle[i])
+			cout << i << endl;
 	}
 
 	// vertex texture coordinates as a cilindrical projection
@@ -181,9 +187,7 @@ std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mes
 	}
 	sphere->m_vertexTexCoords.push_back(glm::vec2(0, 0));
 	
-	//sphere->vertexNormals().resize(size, glm::vec3(0.f, 0.f, 1.f));
-	//sphere->vertexTexCoords().resize(size, glm::vec2(0.f, 0.f));
-	sphere->recomputePerVertexNormals();
+	//sphere->recomputePerVertexNormals();
 
 	return sphere;
 }
