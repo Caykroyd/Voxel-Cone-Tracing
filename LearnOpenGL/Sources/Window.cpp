@@ -2,9 +2,6 @@
 
 #include "Window.h"
 
-#include <cmath>
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -12,7 +9,6 @@
 #include <algorithm>
 #include <exception>
 #include <time.h>
-#include <list>
 
 #include "Scenes/Scene_1.h"
 

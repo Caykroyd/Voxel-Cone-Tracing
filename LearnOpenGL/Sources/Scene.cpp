@@ -22,7 +22,7 @@ void Scene::draw(std::shared_ptr<ShaderProgram> shader)
 
 	light.SendToShader(s);
 
-	for (int i = 0; i < mesh.size(); i++) {
+	for (size_t i = 0; i < mesh.size(); i++) {
 
 		Material material_red = Material();
 		material_red.SendToShader(s);
@@ -65,7 +65,7 @@ void Scene::update()
 
 void Scene::terminate() {
 	camera.reset();
-	for (int i = 0; i < mesh.size(); i++)
+	for (size_t i = 0; i < mesh.size(); i++)
 		mesh[i].reset();
 }
 
