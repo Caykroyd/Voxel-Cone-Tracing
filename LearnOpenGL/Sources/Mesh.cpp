@@ -7,6 +7,8 @@
 #include <functional>
 #include <list>
 
+#include <iostream>
+
 using namespace std;
 
 Mesh::~Mesh () {
@@ -27,26 +29,31 @@ void Mesh::recomputePerVertexNormals (bool angleBased) {
 	m_vertexNormals.clear ();
 	// Change the following code to compute a proper per-vertex normal
 	m_vertexNormals.resize (m_vertexPositions.size (), glm::vec3 (0.0, 0.0, 1.0));
-
+	int i = 0;
 	const unsigned int n = m_vertexPositions.size();
 	std::vector<std::list<glm::vec3>> neighbours(n);
-	for (unsigned int i = 0; i < n; ++i) {
-		glm::vec3 triangle = m_triangleIndices[i];
+	for (glm::vec3 triangle : m_triangleIndices) {
+		if (neighbours[triangle.x].size() == 0) i++;
+		if (neighbours[triangle.y].size() == 0) i++;
+		if (neighbours[triangle.z].size() == 0) i++;
 		neighbours[triangle.x].push_back(triangle);
 		neighbours[triangle.y].push_back(triangle);
 		neighbours[triangle.z].push_back(triangle);
 	}
 
-	for (unsigned int i = 0; i < n; ++i) {
+	for (unsigned int i = 0; i < m_vertexPositions.size(); ++i) {
 		glm::vec3 normal(0.0);
+		if (neighbours[i].size() == 0)
+			cout << "WTF " << i << endl;
 		for (const auto & t : neighbours[i]) {
-			// by computing the cross product, I obtain the normal vector with magnitude proportional to the area of the triangle
 			float k = 1 / glm::distance(m_vertexPositions[t.y], m_vertexPositions[t.x]) 
 							/ glm::distance(m_vertexPositions[t.z], m_vertexPositions[t.x]);
+			// by computing the cross product, I obtain the normal vector with magnitude proportional to the area of the triangle
 			normal += glm::cross(m_vertexPositions[t.y]- m_vertexPositions[t.x], m_vertexPositions[t.z] - m_vertexPositions[t.x]) * k;
 		}
-		m_vertexNormals[i] = glm::normalize(m_vertexPositions[i]);//glm::normalize(normal);
+		m_vertexNormals[i] = glm::normalize(normal);
 	}
+	cout << "Vertices belonging to triangles: " << i << "/" <<n << endl;
 }
 
 void Mesh::init () {

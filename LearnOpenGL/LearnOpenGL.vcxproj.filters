@@ -99,4 +99,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\FragmentShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Shaders\VertexShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

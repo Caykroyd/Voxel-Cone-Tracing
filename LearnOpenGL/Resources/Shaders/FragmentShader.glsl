@@ -39,7 +39,7 @@ void main() {
 	
 	vec3 Li = lightSource.color * lightSource.intensity;
 	vec3 radiance = Li * (fd + fs) * max(0.0, dot(n, wi));
-    colorResponse = vec4 (radiance, 1.0); // Building an RGBA value from an RGB one. 
+    //colorResponse = vec4 (radiance, 1.0); // Building an RGBA value from an RGB one. 
 	
-	//colorResponse = vec4(n,1.0); // shows the normals as colors
+	colorResponse = vec4(n,1.0); // shows the normals as colors
 }

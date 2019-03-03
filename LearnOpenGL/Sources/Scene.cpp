@@ -22,10 +22,10 @@ void Scene::init() {
 
 	light = Light(glm::vec3(10.0, 10.0, 10.0), glm::vec3(1.0, 1.0, 1.0), 1.f);
 
-	load_primitive(P_SPHERE, { 0,0,-4 }, { 0,M_PI_2,0 }, 0.5);
+	//load_primitive(P_SPHERE, { 0,0,-4 }, { 0,M_PI_2,0 }, 0.5);
 	load_mesh("Resources/Models/sphere.off");
 	load_primitive(P_SPHERE, { 2,0,0 }, { 0,M_PI_2,0 }, 1.0);
-	load_primitive(P_SPHERE, { -2,0,0 }, { 0,M_PI_2,0 }, 1.0);
+	//load_primitive(P_SPHERE, { -2,0,0 }, { 0,M_PI_2,0 }, 1.0);
 	load_primitive(P_SPHERE, { 0,2,0 }, { 0,M_PI_2,0 }, 1.0);
 	load_primitive(P_SPHERE, { 0,-2,0 }, { 0,M_PI_2,0 }, 1.0);
 
