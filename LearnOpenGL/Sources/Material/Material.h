@@ -1,8 +1,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "ShaderProgram.h"
-#include "ShaderProperty.h"
+#include "Shader/ShaderProgram.h"
+#include "Shader/ShaderProperty.h"
 
 class Material : public ShaderProperty
 {

@@ -3,103 +3,117 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+      <Extensions>h;hpp;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Mesh">
+      <UniqueIdentifier>{3e4e49f0-a099-49b7-b89d-ed4ab347c47c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{2ad9aabd-b6d5-4015-8434-3e1efb145bd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{71702800-d852-4eb1-a9c4-cd0bb5bbd1c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shader">
+      <UniqueIdentifier>{a0db386e-c68b-4b77-b1b8-f4b9c3b05839}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{ed3b5103-0d0e-4e49-9384-ba57dededb01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Material">
+      <UniqueIdentifier>{273d9aee-aa49-4a14-a1a4-3219618e1c61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extendable">
+      <UniqueIdentifier>{f01af959-ef28-4f46-8696-a25035d7e908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Light">
+      <UniqueIdentifier>{25edb042-9b45-4c6b-a028-8b18deb6629f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\external\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Error.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\MeshLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Material.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\EventManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\PerspectiveCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Camera\Camera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Camera\PerspectiveCamera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Material\Material.cpp">
+      <Filter>Source Files\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Mesh\Mesh.cpp">
+      <Filter>Source Files\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Mesh\MeshLoader.cpp">
+      <Filter>Source Files\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Utility\Error.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Scene\Scene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Shader\ShaderProgram.cpp">
+      <Filter>Source Files\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\Camera.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Light\Light.h">
+      <Filter>Source Files\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Error.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Extendable\IUpdatable.h">
+      <Filter>Source Files\Extendable</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Mesh.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Extendable\Transform.h">
+      <Filter>Source Files\Extendable</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\MeshLoader.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Shader\ShaderProperty.h">
+      <Filter>Source Files\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\ShaderProgram.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Shader\ShaderProgram.h">
+      <Filter>Source Files\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Transform.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Scene\Scene.h">
+      <Filter>Source Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Light.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Scene\Scene_1.h">
+      <Filter>Source Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Material.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Utility\Error.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\FirstPersonController.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Camera\PerspectiveCamera.h">
+      <Filter>Source Files\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Scene.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Camera\Camera.h">
+      <Filter>Source Files\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\EventManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Camera\FirstPersonController.h">
+      <Filter>Source Files\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\IUpdatable.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Material\Material.h">
+      <Filter>Source Files\Material</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\PerspectiveCamera.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sources\Mesh\Mesh.h">
+      <Filter>Source Files\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Mesh\MeshLoader.h">
+      <Filter>Source Files\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\ShaderProperty.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Scenes\Scene_1.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

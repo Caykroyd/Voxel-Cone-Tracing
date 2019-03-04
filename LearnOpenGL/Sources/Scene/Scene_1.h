@@ -3,9 +3,9 @@
 
 #define _USE_MATH_DEFINES
 
-#include "../Scene.h"
-#include "../PerspectiveCamera.h"
-#include "../FirstPersonController.h"
+#include "Scene/Scene.h"
+#include "Camera/PerspectiveCamera.h"
+#include "Camera/FirstPersonController.h"
 
 class Scene_1 : public Scene {
 		

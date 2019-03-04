@@ -26,8 +26,8 @@ SOFTWARE.
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 
-#include "ShaderProperty.h"
-#include "ShaderProgram.h"
+#include "Shader/ShaderProperty.h"
+#include "Shader/ShaderProgram.h"
 
 /// <summary> A camera base class. </summary>
 class Camera : public ShaderProperty {
@@ -46,7 +46,7 @@ class Camera : public ShaderProperty {
 			glm::mat4 projectionMatrix = getProjectionMatrix();//computeProjectionMatrix();
 			shader.set("M_Projection", projectionMatrix); // Compute the projection matrix of the camera and pass it to the GPU program
 
-			updateViewMatrix();
+			//updateViewMatrix();
 		
 			shader.set("M_View", viewMatrix);//computeViewMatrix();
 			shader.set("M_View_1t", glm::transpose(glm::inverse(viewMatrix)));

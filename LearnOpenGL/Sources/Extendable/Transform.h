@@ -3,8 +3,8 @@
 
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include "ShaderProperty.h"
-#include "ShaderProgram.h"
+#include "Shader/ShaderProperty.h"
+#include "Shader/ShaderProgram.h"
 
 /// A base class to represent spatially embedded entities in the scene. 
 class Transform : public ShaderProperty {

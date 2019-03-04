@@ -4,11 +4,11 @@
 
 #include <list>
 
-#include "Camera.h"
-#include "Light.h"
-#include "Mesh.h"
-#include "ShaderProgram.h"
-#include "IUpdatable.h"
+#include "../Camera/Camera.h"
+#include "Light/Light.h"
+#include "Mesh/Mesh.h"
+#include "Shader/ShaderProgram.h"
+#include "Extendable/IUpdatable.h"
 
 enum Primitives { P_SPHERE };
 

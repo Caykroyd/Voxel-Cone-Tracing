@@ -2,10 +2,11 @@
 
 #include <glm/glm.hpp>
 
-#include "MeshLoader.h"
+#include "Mesh/MeshLoader.h"
 #include "Window.h"
-#include "FirstPersonController.h"
-#include "PerspectiveCamera.h"
+#include "Camera/FirstPersonController.h"
+#include "Camera/PerspectiveCamera.h"
+#include "Material/Material.h"
 
 #include <memory>
 #include <iostream>

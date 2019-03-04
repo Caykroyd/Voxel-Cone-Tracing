@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Vladmir\Projects\ImageSynthesis\learnopengl\external\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Vladmir\Projects\ImageSynthesis\learnopengl\projects\LearnOpenGL\LearnOpenGL\Sources;C:\Users\Vladmir\Projects\ImageSynthesis\learnopengl\external\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Vladmir\Projects\ImageSynthesis\learnopengl\external\libs;$(LibraryPath)</LibraryPath>
     <SourcePath>C:\Users\Vladmir\Projects\ImageSynthesis\learnopengl\projects\LearnOpenGL\LearnOpenGL\Sources;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -125,35 +125,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\external\src\glad.c" />
+    <ClCompile Include="Sources\Camera\Camera.cpp" />
+    <ClCompile Include="Sources\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="Sources\Material\Material.cpp" />
+    <ClCompile Include="Sources\Mesh\Mesh.cpp" />
+    <ClCompile Include="Sources\Mesh\MeshLoader.cpp" />
+    <ClCompile Include="Sources\Scene\Scene.cpp" />
+    <ClCompile Include="Sources\Shader\ShaderProgram.cpp" />
+    <ClCompile Include="Sources\Utility\Error.cpp" />
     <ClCompile Include="Sources\Window.cpp" />
-    <ClCompile Include="Sources\Camera.cpp" />
-    <ClCompile Include="Sources\Error.cpp" />
-    <ClCompile Include="Sources\EventManager.cpp" />
     <ClCompile Include="Sources\main.cpp" />
-    <ClCompile Include="Sources\Material.cpp" />
-    <ClCompile Include="Sources\Mesh.cpp" />
-    <ClCompile Include="Sources\MeshLoader.cpp" />
-    <ClCompile Include="Sources\PerspectiveCamera.cpp" />
-    <ClCompile Include="Sources\Scene.cpp" />
-    <ClCompile Include="Sources\ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\Scenes\Scene_1.h" />
+    <ClInclude Include="Sources\Camera\Camera.h" />
+    <ClInclude Include="Sources\Camera\FirstPersonController.h" />
+    <ClInclude Include="Sources\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="Sources\Extendable\IUpdatable.h" />
+    <ClInclude Include="Sources\Extendable\Transform.h" />
+    <ClInclude Include="Sources\Light\Light.h" />
+    <ClInclude Include="Sources\Material\Material.h" />
+    <ClInclude Include="Sources\Mesh\Mesh.h" />
+    <ClInclude Include="Sources\Mesh\MeshLoader.h" />
+    <ClInclude Include="Sources\Scene\Scene.h" />
+    <ClInclude Include="Sources\Scene\Scene_1.h" />
+    <ClInclude Include="Sources\Shader\ShaderProgram.h" />
+    <ClInclude Include="Sources\Shader\ShaderProperty.h" />
+    <ClInclude Include="Sources\Utility\Error.h" />
     <ClInclude Include="Sources\Window.h" />
-    <ClInclude Include="Sources\Camera.h" />
-    <ClInclude Include="Sources\ShaderProperty.h" />
-    <ClInclude Include="Sources\Error.h" />
-    <ClInclude Include="Sources\EventManager.h" />
-    <ClInclude Include="Sources\FirstPersonController.h" />
-    <ClInclude Include="Sources\IUpdatable.h" />
-    <ClInclude Include="Sources\Light.h" />
-    <ClInclude Include="Sources\Material.h" />
-    <ClInclude Include="Sources\Mesh.h" />
-    <ClInclude Include="Sources\MeshLoader.h" />
-    <ClInclude Include="Sources\PerspectiveCamera.h" />
-    <ClInclude Include="Sources\Scene.h" />
-    <ClInclude Include="Sources\ShaderProgram.h" />
-    <ClInclude Include="Sources\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FragmentShader.glsl" />

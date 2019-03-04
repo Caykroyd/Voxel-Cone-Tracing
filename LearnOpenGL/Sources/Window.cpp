@@ -3,14 +3,10 @@
 #include "Window.h"
 
 #include <iostream>
-#include <vector>
-#include <string>
-#include <memory>
-#include <algorithm>
 #include <exception>
 #include <time.h>
 
-#include "Scenes/Scene_1.h"
+#include "Scene/Scene_1.h"
 
 
 void Window::glfw_init() {
@@ -186,7 +182,7 @@ void Window::mouse_button_callback(GLFWwindow * window, int button, int action, 
 		if (!s->isRotating) {
 			s->isRotating = true;
 			glfwGetCursorPos(window, &s->baseX, &s->baseY);
-			s->baseRot = s->camera->rotation;
+			//s->baseRot = s->camera->rotation;
 		}
 	}
 	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
@@ -196,7 +192,7 @@ void Window::mouse_button_callback(GLFWwindow * window, int button, int action, 
 		if (!s->isPanning) {
 			s->isPanning = true;
 			glfwGetCursorPos(window, &s->baseX, &s->baseY);
-			s->baseTrans = s->camera->position;
+			//s->baseTrans = s->camera->position;
 		}
 	}
 	else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
@@ -206,7 +202,7 @@ void Window::mouse_button_callback(GLFWwindow * window, int button, int action, 
 		if (!s->isZooming) {
 			s->isZooming = true;
 			glfwGetCursorPos(window, &s->baseX, &s->baseY);
-			s->baseTrans = s->camera->position;
+			//s->baseTrans = s->camera->position;
 		}
 	}
 	else if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE) {

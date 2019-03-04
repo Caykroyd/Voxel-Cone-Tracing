@@ -8,18 +8,14 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include <glm/gtc/quaternion.hpp>
 
 #include <list>
+#include <memory>
+#include <string>
 
-#include "Error.h"
-#include "ShaderProgram.h"
-#include "Camera.h"
-#include "Mesh.h"
-#include "MeshLoader.h"
-#include "Light.h"
-#include "Material.h"
-#include "Scene.h"
+#include "Utility/Error.h"
+#include "Shader/ShaderProgram.h"
+#include "Scene/Scene.h"
 
 class Window {
 
@@ -44,7 +40,7 @@ private:
 	std::shared_ptr<ShaderProgram> shader = nullptr;
 
 	void process_input(GLFWwindow* window);
-
+	
 	std::string toString(glm::vec3 v);
 
 	Window() {};
@@ -56,9 +52,9 @@ public:
 	void operator=(Window const&) = delete;
 	static Window& getInstance();
 
-	void update();
-
 	bool shouldClose();
+
+	void update();
 
 	void init();
 

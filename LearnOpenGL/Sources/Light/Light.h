@@ -2,8 +2,8 @@
 
 #include <glm/glm.hpp>
 
-#include "ShaderProperty.h"
-#include "ShaderProgram.h"
+#include "Shader/ShaderProperty.h"
+#include "Shader/ShaderProgram.h"
 
 struct Light : public ShaderProperty
 {
