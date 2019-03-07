@@ -15,7 +15,7 @@ Mesh::~Mesh () {
 	clear ();
 }
 
-void Mesh::computeBoundingSphere (glm::vec3 & center, float & radius) const {
+void Mesh::compute_bounding_sphere (glm::vec3 & center, float & radius) const {
 	center = glm::vec3 (0.0);
 	radius = 0.f;
 	for (const auto & p : m_vertexPositions)
@@ -25,12 +25,10 @@ void Mesh::computeBoundingSphere (glm::vec3 & center, float & radius) const {
 		radius = std::max (radius, distance (center, p));
 }
 
-void Mesh::recomputePerVertexNormals (bool angleBased) {
+void Mesh::recompute_per_vertex_normals (bool angleBased) {
 	m_vertexNormals.clear ();
-	// Change the following code to compute a proper per-vertex normal
 	m_vertexNormals.resize (m_vertexPositions.size (), glm::vec3 (0.0, 0.0, 1.0));
-
-
+	
 	const unsigned int n = m_vertexPositions.size();
 	std::vector<std::list<glm::uvec3>> neighbours(n);
 	for (glm::uvec3 triangle : m_triangleIndices) {
@@ -41,8 +39,6 @@ void Mesh::recomputePerVertexNormals (bool angleBased) {
 
 	for (unsigned int i = 0; i < m_vertexPositions.size(); ++i) {
 		glm::vec3 normal(0.0);
-		if (neighbours[i].size() == 0)
-			cout << "WTF " << i << endl;
 		for (const auto & t : neighbours[i]) {
 			float k = 1 / glm::distance(m_vertexPositions[t.y], m_vertexPositions[t.x]) 
 							/ glm::distance(m_vertexPositions[t.z], m_vertexPositions[t.x]);
@@ -120,8 +116,8 @@ void Mesh::clear() {
 	}
 }
 
-std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mesh> sphere) {
-	sphere ->clear();
+std::shared_ptr<Mesh> Mesh::makeprimitive_sphere(int resolution) {
+	std::shared_ptr<Mesh> sphere = std::make_shared<Mesh>();
 
 	int re_2 = int(resolution / 2);
 
@@ -130,7 +126,7 @@ std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mes
 	sphere->m_vertexPositions.push_back(glm::vec3(0, 0, 1));
 	sphere->m_vertexNormals.push_back(glm::vec3(0, 0, 1));
 	for (int step_T = 0; step_T < resolution; step_T++) {
-		double theta = 2 * M_PI * step_T / (resolution-1);
+		double theta = 2 * M_PI * step_T / (resolution - 1);
 		for (int step_P = 0; step_P < re_2; step_P++) {
 			double phi = M_PI * step_P / re_2;
 			sphere->m_vertexPositions.push_back(glm::vec3(std::sin(phi)*std::cos(theta), std::sin(phi)*std::sin(theta), std::cos(phi)));
@@ -139,7 +135,7 @@ std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mes
 	}
 	sphere->m_vertexPositions.push_back(glm::vec3(0, 0, -1));
 	sphere->m_vertexNormals.push_back(glm::vec3(0, 0, -1));
-	
+
 	int size = sphere->m_vertexPositions.size();
 
 	int k = (resolution - 1) * re_2;
@@ -151,19 +147,17 @@ std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mes
 			int step_P2 = step_P + 1;
 
 			// triangle 1: normals pointing outwards 
-			//sphere->m_triangleIndices.push_back(glm::uvec3(1+thisIndex, 1+(thisIndex + 1 + re_2)%k, 1+thisIndex + 1));
-			sphere->m_triangleIndices.push_back(glm::uvec3(step_T*re_2+step_P, step_T*re_2 + step_P2, step_T2*re_2 + step_P2));
+			sphere->m_triangleIndices.push_back(glm::uvec3(step_T*re_2 + step_P, step_T*re_2 + step_P2, step_T2*re_2 + step_P2));
 
 			// triangle 2: normals pointing outwards
-			//sphere->m_triangleIndices.push_back(glm::uvec3(1+thisIndex, 1+(thisIndex + re_2)%k, 1+(thisIndex + 1 + re_2)%k));
 			sphere->m_triangleIndices.push_back(glm::uvec3(step_T*re_2 + step_P, step_T2*re_2 + step_P2, step_T2*re_2 + step_P));
 
 		}
 		// computing triangles in poles
 		sphere->m_triangleIndices.push_back(glm::uvec3(0, step_T * re_2 + 1, step_T2 * re_2 + 1));
 
-		sphere->m_triangleIndices.push_back(glm::uvec3(size - 1, step_T2 * re_2 + (re_2 - 1), step_T * re_2 + (re_2-1)));
-	}	
+		sphere->m_triangleIndices.push_back(glm::uvec3(size - 1, step_T2 * re_2 + (re_2 - 1), step_T * re_2 + (re_2 - 1)));
+	}
 
 	vector<bool> belongsToTriangle = vector<bool>(sphere->m_vertexPositions.size(), false);
 	for (glm::uvec3 triangle : sphere->m_triangleIndices) {
@@ -179,15 +173,15 @@ std::shared_ptr<Mesh> Mesh::primitiveSphere(int resolution, std::shared_ptr <Mes
 	// vertex texture coordinates as a cilindrical projection
 	sphere->m_vertexTexCoords.push_back(glm::vec2(0, 0));
 	for (int step_T = 0; step_T < resolution; step_T++) {
-		double theta = 2 * M_PI * step_T / (resolution-1);
+		double theta = 2 * M_PI * step_T / (resolution - 1);
 		for (int step_P = 0; step_P < re_2; step_P++) {
 			double phi = M_PI * step_P / re_2;
 			sphere->m_vertexTexCoords.push_back(glm::vec2(std::sin(phi) * std::cos(theta), std::sin(phi)*std::sin(theta)));
 		}
 	}
 	sphere->m_vertexTexCoords.push_back(glm::vec2(0, 0));
-	
-	//sphere->recomputePerVertexNormals();
+
+	//sphere->recompute_per_vertex_normals();
 
 	return sphere;
 }

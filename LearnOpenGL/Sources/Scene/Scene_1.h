@@ -30,7 +30,7 @@ public:
 		// Adjust the camera to the actual mesh
 		float meshSize = 1.0f;
 		glm::vec3 center;
-		mesh[0]->computeBoundingSphere(center, meshSize);
+		mesh[0]->compute_bounding_sphere(center, meshSize);
 		meshSize *= 2;
 		glm::vec3 k = center + mesh[0]->getTranslation();
 		std::cout << k.x << " " << k.y << " " << k.z << std::endl;

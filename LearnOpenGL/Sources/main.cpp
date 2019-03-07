@@ -4,11 +4,11 @@
 
 int main() {
 
-	Window& app = Window::getInstance();
+	Window& app = Window::GetInstance();
 	
 	app.init();
 
-	while(!app.shouldClose()) { // check if the close button has been triggered for the window 
+	while(!app.ShouldClose()) { // check if the close button has been triggered for the window 
 		app.update();
 	}
 

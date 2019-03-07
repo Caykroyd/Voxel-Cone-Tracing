@@ -7,6 +7,7 @@
 #include "Camera/FirstPersonController.h"
 #include "Camera/PerspectiveCamera.h"
 #include "Material/Material.h"
+#include "Game.h"
 
 #include <memory>
 #include <iostream>
@@ -78,7 +79,7 @@ std::shared_ptr<Mesh> Scene::load_mesh(const std::string& filename) {
 		MeshLoader::loadOFF(filename, meshPtr);
 	}
 	catch (std::exception & e) {
-		Window::exit_error("Error loading mesh from " + filename + ":" + e.what());
+		Game::GetInstance().Exit("Error loading mesh from " + filename + ":" + e.what(), true);
 	}
 	meshPtr->init();
 
@@ -89,13 +90,12 @@ std::shared_ptr<Mesh> Scene::load_mesh(const std::string& filename) {
 
 
 std::shared_ptr<Mesh> Scene::load_primitive(Primitives shape, glm::vec3 translation, glm::vec3 rotation, float scale) {
-
-	// Mesh
-	std::shared_ptr<Mesh> meshPtr = std::make_shared<Mesh>();
+	
+	std::shared_ptr<Mesh> meshPtr = nullptr;
 
 	switch (shape) {
 	case P_SPHERE:
-		Mesh::primitiveSphere(50, meshPtr); break;
+		meshPtr = Mesh::makeprimitive_sphere(50); break;
 	}
 
 	meshPtr->init();

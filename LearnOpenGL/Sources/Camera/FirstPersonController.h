@@ -65,8 +65,8 @@ public:
 			targetCamera->position = renderingCamera->position;
 
 			int xwidth, yheight;
-			glfwGetWindowSize(Window::getInstance().window, &xwidth, &yheight);
-			glfwSetCursorPos(Window::getInstance().window, xwidth / 2, yheight / 2);
+			glfwGetWindowSize(Window::GetInstance().window, &xwidth, &yheight);
+			glfwSetCursorPos(Window::GetInstance().window, xwidth / 2, yheight / 2);
 			//camera->setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
 
 			firstUpdate = false;
@@ -76,7 +76,7 @@ public:
 		double xpos, ypos;
 		double xmid, ymid;
 
-		GLFWwindow * window = Window::getInstance().window;
+		GLFWwindow * window = Window::GetInstance().window;
 
 		glfwGetWindowSize(window, &xwidth, &yheight);
 		glfwGetCursorPos(window, &xpos, &ypos);
@@ -109,25 +109,25 @@ public:
 		// ----------
 		// Move forward.
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-			targetCamera->position += targetCamera->forward() * (float)Window::delta_time * CAMERA_SPEED;
+			targetCamera->position += targetCamera->forward() * (float)Game::delta_time * CAMERA_SPEED;
 		}
 		// Move backward.
 		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-			targetCamera->position -= targetCamera->forward() * (float)Window::delta_time * CAMERA_SPEED;
+			targetCamera->position -= targetCamera->forward() * (float)Game::delta_time * CAMERA_SPEED;
 		}
 		// Strafe right.
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			targetCamera->position += targetCamera->right() * (float)Window::delta_time * CAMERA_SPEED;
+			targetCamera->position += targetCamera->right() * (float)Game::delta_time * CAMERA_SPEED;
 		}
 		// Strafe left.
 		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			targetCamera->position -= targetCamera->right() * (float)Window::delta_time * CAMERA_SPEED;
+			targetCamera->position -= targetCamera->right() * (float)Game::delta_time * CAMERA_SPEED;
 		}
 
 		// Interpolate between target and current camera.
 		auto camera = renderingCamera;
-		camera->rotation = mix(camera->rotation, targetCamera->rotation, glm::clamp(Window::delta_time * CAMERA_ROTATION_INTERPOLATION_SPEED, 0.0, 1.0));
-		camera->position = mix(camera->position, targetCamera->position, glm::clamp(Window::delta_time * CAMERA_POSITION_INTERPOLATION_SPEED, 0.0, 1.0));
+		camera->rotation = mix(camera->rotation, targetCamera->rotation, glm::clamp(Game::delta_time * CAMERA_ROTATION_INTERPOLATION_SPEED, 0.0, 1.0));
+		camera->position = mix(camera->position, targetCamera->position, glm::clamp(Game::delta_time * CAMERA_POSITION_INTERPOLATION_SPEED, 0.0, 1.0));
 
 		// Reset mouse position for next update iteration.
 		glfwSetCursorPos(window, xwidth / 2, yheight / 2);

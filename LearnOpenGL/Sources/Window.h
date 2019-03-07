@@ -16,6 +16,7 @@
 #include "Utility/Error.h"
 #include "Shader/ShaderProgram.h"
 #include "Scene/Scene.h"
+#include "Game.h"
 
 class Window {
 
@@ -23,52 +24,44 @@ private:
 
 	const std::string SHADER_PATH = std::string("Resources/Shaders/");
 
+	std::shared_ptr<ShaderProgram> shader = nullptr;
+	
+	void process_input(GLFWwindow* window);
+
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static void cursor_pos_callback(GLFWwindow * window, double xpos, double ypos);
 	static void mouse_button_callback(GLFWwindow * window, int button, int action, int mods);
 	static void key_callback(GLFWwindow * windowPtr, int key, int scancode, int action, int mods);
 
-	void glfw_init();
-	void glad_init(glm::vec4 color);
-	
-	void terminate_resources();
-	
-	void load_shaders();
-		
-	void draw();
-	   
-	std::shared_ptr<ShaderProgram> shader = nullptr;
-
-	void process_input(GLFWwindow* window);
-	
-	std::string toString(glm::vec3 v);
-
 	Window() {};
 
-	static double _time;
+	void glfw_init();
+	void glad_init(glm::vec4 color);
 
+	void load_shaders();
+
+	void draw();
+
+	void terminate_resources();
+	
 public:
 	Window(Window const&) = delete;
 	void operator=(Window const&) = delete;
-	static Window& getInstance();
-
-	bool shouldClose();
-
-	void update();
+	static Window& GetInstance();
 
 	void init();
 
-	void terminate();
+	void update();
 
-	static void exit_error(const std::string & message);
+	inline bool ShouldClose() const { return glfwWindowShouldClose(window); };
+
+	void terminate();
 
 	std::shared_ptr<Scene> current_scene = nullptr;
 
 	GLFWwindow* window = nullptr;
 
 	float window_width, window_height;
-
-	static double delta_time;
 
 };
 

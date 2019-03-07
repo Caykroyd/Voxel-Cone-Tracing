@@ -39,6 +39,6 @@ void MeshLoader::loadOFF (const std::string & filename, std::shared_ptr<Mesh> me
     in.close ();
     meshPtr->vertexNormals ().resize (P.size (), glm::vec3 (0.f, 0.f, 1.f));
     meshPtr->vertexTexCoords ().resize (P.size (), glm::vec2 (0.f, 0.f));
-    meshPtr->recomputePerVertexNormals ();
+    meshPtr->recompute_per_vertex_normals ();
     std::cout << " > Mesh <" << filename << "> loaded" <<  std::endl;
 }

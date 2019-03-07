@@ -7,7 +7,6 @@
 #include "../Camera/Camera.h"
 #include "Light/Light.h"
 #include "Mesh/Mesh.h"
-#include "Shader/ShaderProgram.h"
 #include "Extendable/IUpdatable.h"
 
 enum Primitives { P_SPHERE };
@@ -22,7 +21,7 @@ public:
 	Scene() {};
 
 	// Camera control variables
-	float meshScale = 1.0; // To update based on the mesh size, so that navigation runs at scale
+	float meshScale = 1.0; // To Update based on the mesh size, so that navigation runs at scale
 	bool isRotating = false;
 	bool isPanning = false;
 	bool isZooming = false;

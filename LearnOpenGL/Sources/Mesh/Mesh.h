@@ -24,15 +24,15 @@ public:
 	inline std::vector<glm::uvec3> & triangleIndices () { return m_triangleIndices; }
 
 	/// Compute the parameters of a sphere which bounds the mesh
-	void computeBoundingSphere (glm::vec3 & center, float & radius) const;
+	void compute_bounding_sphere (glm::vec3 & center, float & radius) const;
 	
-	void recomputePerVertexNormals (bool angleBased = false);
+	void recompute_per_vertex_normals (bool angleBased = false);
 
 	void init ();
 	void render ();
 	void clear ();
-	
-	static std::shared_ptr<Mesh> primitiveSphere(int resolution, std::shared_ptr<Mesh> sphere);
+
+	static std::shared_ptr<Mesh> makeprimitive_sphere(int resolution);
 
 private:
 	std::vector<glm::vec3> m_vertexPositions;

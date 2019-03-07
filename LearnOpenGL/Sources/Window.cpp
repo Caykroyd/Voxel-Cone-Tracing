@@ -68,14 +68,8 @@ void Window::terminate_resources() {
 
 void Window::terminate()
 {
+	terminate_resources();
 	glfwTerminate();
-}
-
-void Window::exit_error(const std::string& message) {
-	Window::getInstance().terminate_resources();
-	std::cerr << message << std::endl;
-	std::getchar();
-	std::exit(EXIT_FAILURE);
 }
 
 void Window::load_shaders() {
@@ -84,13 +78,10 @@ void Window::load_shaders() {
 			SHADER_PATH + "FragmentShader.glsl");
 	}
 	catch (std::exception & e) {
-		exit_error("Error loading shader program [" + SHADER_PATH + "VertexShader.glsl" +
-			"] and [" + SHADER_PATH + "FragmentShader.glsl" + "]. \n" + e.what());
+		Game::GetInstance().Exit("Error loading shader program [" + SHADER_PATH + "VertexShader.glsl" +
+			"] and [" + SHADER_PATH + "FragmentShader.glsl" + "]. \n" + e.what(), true);
 	}
 }
-
-double Window::delta_time = 0.0;
-double Window::_time = 0.0;
 
 void Window::update()
 {
@@ -98,31 +89,29 @@ void Window::update()
 
 	current_scene->update();
 
+	Game::GetInstance().Update(glfwGetTime());
+
 	draw();
 
 	glfwSwapBuffers(window); // double buffers
 	glfwPollEvents(); // check if any events have been triggered for glfw, like inputs.
-
-	double current_time = glfwGetTime();
-	delta_time = current_time - _time;
-	_time = current_time;
-}
-
-bool Window::shouldClose()
-{
-	return glfwWindowShouldClose(window);
 }
 
 void Window::init()
 {
+	Game& game = Game::GetInstance();
+	
+	// Bind the error callback so errors are logged
+	game.SetExitCallback(std::bind(&Window::terminate, this));
+
 	glfw_init();
 	glad_init();
-
+	
 	load_shaders();
 	current_scene = std::make_shared<Scene_1>();
 	current_scene->init();
 	
-	_time = glfwGetTime();
+	Game::GetInstance().SetTime(glfwGetTime());
 }
 
 
@@ -130,7 +119,7 @@ void Window::draw() {
 	current_scene->draw(shader);
 }
 
-Window& Window::getInstance()
+Window& Window::GetInstance()
 {
 	static Window app;
 
@@ -146,13 +135,13 @@ void Window::process_input(GLFWwindow* window)
 
 void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	//Window::getInstance().current_scene->camera->setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
+	//Window::GetInstance().current_scene->camera->setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
 	glViewport(0, 0, width, height);
 }
 
 void Window::cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
-{
-	Window& a = Window::getInstance();
+{/*
+	Window& a = Window::GetInstance();
 	std::shared_ptr<Scene> s = a.current_scene;
 
 	int width, height;
@@ -170,12 +159,12 @@ void Window::cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 	}
 	else if (s->isZooming) {
 		//s->camera->position = s->baseTrans + s->meshScale * glm::vec3(0.0, 0.0, dy);
-	}
+	}*/
 }
 
 void Window::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
 { // use an event registering system! use a list of pairs (button, action) that maps into a set of callback functions
-	Window& a = Window::getInstance();
+/*	Window& a = Window::GetInstance();
 	std::shared_ptr<Scene> s = a.current_scene;
 
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
@@ -207,7 +196,7 @@ void Window::mouse_button_callback(GLFWwindow * window, int button, int action, 
 	}
 	else if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE) {
 		s->isZooming = false;
-	}
+	}*/
 }
 
 void Window::key_callback(GLFWwindow * windowPtr, int key, int scancode, int action, int mods) {
@@ -223,9 +212,5 @@ void Window::key_callback(GLFWwindow * windowPtr, int key, int scancode, int act
 	else if (action == GLFW_PRESS && key == GLFW_KEY_ESCAPE) {
 		glfwSetWindowShouldClose(windowPtr, true); // Closes the application if the escape key is pressed
 	}
-}
-
-std::string Window::toString(glm::vec3 v) {
-	return "(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ", " + std::to_string(v.z) + ")";
 }
 
